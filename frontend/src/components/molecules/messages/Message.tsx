@@ -55,9 +55,11 @@ const Message = memo(
     const isStep = !message.type.includes('message');
     // Only keep tool calls if Chain of Thought is tool_call
     const toolCallSkip =
-      isStep && config?.ui.cot === 'tool_call' && message.type !== 'tool';
+      isStep &&
+      (config?.ui as any)?.cot === 'tool_call' &&
+      message.type !== 'tool';
 
-    const hiddenSkip = isStep && config?.ui.cot === 'hidden';
+    const hiddenSkip = isStep && (config?.ui as any)?.cot === 'hidden';
 
     const skip = toolCallSkip || hiddenSkip;
 

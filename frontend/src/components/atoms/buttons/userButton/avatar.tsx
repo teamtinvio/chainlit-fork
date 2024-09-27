@@ -6,7 +6,7 @@ import UserIcon from 'assets/user';
 
 export default function UserAvatar(props: IconButtonProps) {
   const { user } = useAuth();
-  const displayName = user?.display_name || user?.identifier;
+  const displayName = (user as any)?.display_name || user?.identifier;
   return (
     <IconButton {...props}>
       <Avatar

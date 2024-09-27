@@ -6,8 +6,7 @@ import { Box, IconButton, Stack, TextField } from '@mui/material';
 
 import {
   IStep,
-  messagesState,
-  useChatInteract,
+  messagesState, // useChatInteract,
   useConfig
 } from '@chainlit/react-client';
 
@@ -26,13 +25,17 @@ export default function UserMessage({
 }: React.PropsWithChildren<Props>) {
   const config = useConfig();
   const { askUser, loading } = useContext(MessageContext);
-  const { editMessage } = useChatInteract();
+  // const { editMessage } = useChatInteract();
+  const editMessage = (obj: any) => {
+    console.log('editMessage to be implemented', obj);
+  };
+
   const setMessages = useSetRecoilState(messagesState);
   const disabled = loading || !!askUser;
   const [isEditing, setIsEditing] = useState(false);
   const textFieldRef = useRef<HTMLInputElement>(null);
 
-  const isEditable = !!config.config?.features.edit_message;
+  const isEditable = !!(config.config as any)?.features?.edit_message;
 
   const handleEdit = () => {
     if (textFieldRef.current) {

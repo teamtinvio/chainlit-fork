@@ -45,8 +45,8 @@ const Messages = memo(
           // Handle chainlit runs
           if (CL_RUN_NAMES.includes(m.name)) {
             const isRunning = !m.end && !m.isError && messageContext.loading;
-            const isToolCallCoT = config?.ui.cot === 'tool_call';
-            const isHiddenCoT = config?.ui.cot === 'hidden';
+            const isToolCallCoT = (config?.ui as any)?.cot === 'tool_call';
+            const isHiddenCoT = (config?.ui as any)?.cot === 'hidden';
 
             const showToolCoTLoader = isToolCallCoT
               ? isRunning && !hasToolStep(m)

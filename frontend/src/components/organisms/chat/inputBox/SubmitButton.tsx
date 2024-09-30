@@ -1,5 +1,4 @@
 import StopCircle from '@mui/icons-material/StopCircle';
-import Telegram from '@mui/icons-material/Telegram';
 import { Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -11,6 +10,8 @@ import {
 } from '@chainlit/react-client';
 
 import { Translator } from 'components/i18n';
+
+import { SendIcon } from 'assets/SendIcon';
 
 interface SubmitButtonProps {
   disabled?: boolean;
@@ -29,7 +30,6 @@ const SubmitButton = ({ disabled, onSubmit }: SubmitButtonProps) => {
   return (
     <Box
       sx={{
-        mr: 1,
         color: 'text.secondary'
       }}
     >
@@ -39,7 +39,14 @@ const SubmitButton = ({ disabled, onSubmit }: SubmitButtonProps) => {
             <Translator path="components.organisms.chat.inputBox.SubmitButton.stopTask" />
           }
         >
-          <IconButton id="stop-button" onClick={handleClick}>
+          <IconButton
+            id="stop-button"
+            sx={{
+              width: 36,
+              height: 36
+            }}
+            onClick={handleClick}
+          >
             <StopCircle />
           </IconButton>
         </Tooltip>
@@ -49,8 +56,16 @@ const SubmitButton = ({ disabled, onSubmit }: SubmitButtonProps) => {
             <Translator path="components.organisms.chat.inputBox.SubmitButton.sendMessage" />
           }
         >
-          <IconButton disabled={disabled} color="inherit" onClick={onSubmit}>
-            <Telegram />
+          <IconButton
+            sx={{
+              width: 36,
+              height: 36
+            }}
+            disabled={disabled}
+            color="inherit"
+            onClick={onSubmit}
+          >
+            <SendIcon />
           </IconButton>
         </Tooltip>
       )}

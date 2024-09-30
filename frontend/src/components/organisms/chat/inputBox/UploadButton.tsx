@@ -1,12 +1,12 @@
 import { useUpload } from 'hooks';
 
-import { IconButton, Theme, Tooltip, useMediaQuery } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 
 import { FileSpec, useConfig } from '@chainlit/react-client';
 
 import { Translator } from 'components/i18n';
 
-import AttachmentIcon from 'assets/attachment';
+import { PaperclipIcon } from 'assets/PaperclipIcon';
 
 type Props = {
   disabled?: boolean;
@@ -29,10 +29,6 @@ const UploadButton = ({
     options: { noDrag: true }
   });
 
-  const size = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
-    ? 'small'
-    : 'medium';
-
   if (!upload || !config?.features?.spontaneous_file_upload?.enabled)
     return null;
   const { getRootProps, getInputProps } = upload;
@@ -49,10 +45,18 @@ const UploadButton = ({
           id={disabled ? 'upload-button-loading' : 'upload-button'}
           disabled={disabled}
           color="inherit"
-          size={size}
+          sx={{
+            width: 36,
+            height: 36,
+            ':hover': {
+              'svg > path': {
+                fill: 'white'
+              }
+            }
+          }}
           {...getRootProps({ className: 'dropzone' })}
         >
-          <AttachmentIcon fontSize={size} />
+          <PaperclipIcon />
         </IconButton>
       </span>
     </Tooltip>

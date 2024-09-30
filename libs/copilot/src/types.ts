@@ -21,4 +21,9 @@ export interface IWidgetConfig {
       boxShadow?: string;
     };
   };
+  chatPopover?: {
+    style?: {
+      inset?: string;
+    };
+  };
 }

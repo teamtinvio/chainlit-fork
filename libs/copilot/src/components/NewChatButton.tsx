@@ -29,8 +29,15 @@ export default function NewChatButton() {
       <Tooltip
         title={<Translator path="components.molecules.newChatButton.newChat" />}
       >
-        <IconButton edge="end" id="new-chat-button" onClick={handleClickOpen}>
-          <SquarePenIcon sx={{ width: 20, height: 20 }} />
+        <IconButton
+          id="new-chat-button"
+          onClick={handleClickOpen}
+          sx={{
+            width: 36,
+            height: 36
+          }}
+        >
+          <SquarePenIcon sx={{ width: 16, height: 16 }} />
         </IconButton>
       </Tooltip>
       <NewChatDialog

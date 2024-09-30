@@ -2,17 +2,14 @@ import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import 'regenerator-runtime';
 
-import TuneIcon from '@mui/icons-material/Tune';
-import { Box, IconButton, Stack, TextField } from '@mui/material';
+import { Box, Stack, TextField } from '@mui/material';
 
 import { useTranslation } from '@chainlit/app/src/components/i18n/Translator';
 import { Attachments } from '@chainlit/app/src/components/molecules/attachments';
 import MicButton from '@chainlit/app/src/components/organisms/chat/inputBox/MicButton';
 import { SubmitButton } from '@chainlit/app/src/components/organisms/chat/inputBox/SubmitButton';
 import UploadButton from '@chainlit/app/src/components/organisms/chat/inputBox/UploadButton';
-import WaterMark from '@chainlit/app/src/components/organisms/chat/inputBox/waterMark';
 import { IAttachment, attachmentsState } from '@chainlit/app/src/state/chat';
-import { chatSettingsOpenState } from '@chainlit/app/src/state/project';
 import { inputHistoryState } from '@chainlit/app/src/state/userInputHistory';
 import { FileSpec, useChatData } from '@chainlit/react-client';
 
@@ -37,15 +34,9 @@ const Input = memo(
   ({ fileSpec, onFileUpload, onFileUploadError, onSubmit, onReply }: Props) => {
     const [attachments, setAttachments] = useRecoilState(attachmentsState);
     const setInputHistory = useSetRecoilState(inputHistoryState);
-    const setChatSettingsOpen = useSetRecoilState(chatSettingsOpenState);
 
     const ref = useRef<HTMLDivElement>(null);
-    const {
-      loading,
-      askUser,
-      chatSettingsInputs,
-      disabled: _disabled
-    } = useChatData();
+    const { loading, askUser, disabled: _disabled } = useChatData();
 
     const [value, setValue] = useState('');
     const [isComposing, setIsComposing] = useState(false);
@@ -131,25 +122,29 @@ const Input = memo(
       <>
         <Stack
           sx={{
-            backgroundColor: 'background.default',
-            borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-            margin: 1,
-            paddingTop: 1,
-            paddingX: 1,
-            boxShadow: 'box-shadow: 0px 2px 4px 0px #0000000D',
-            gap: 1,
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: '#23303F',
+            borderRadius: '8px',
+            margin: '0 16px 16px 16px',
+            padding: '8px',
             textarea: {
-              height: '34px',
               maxHeight: '30vh',
               overflowY: 'auto !important',
               resize: 'none',
               color: 'text.primary',
-              lineHeight: '24px'
+              lineHeight: '24px',
+              margin: '0 8px 1px 8px'
+            },
+            '& > div > div': {
+              alignItems: 'center',
+              padding: 0
             }
           }}
+          justifyContent="center"
         >
           {attachments.length > 0 ? (
-            <Box mt={2}>
+            <Box alignSelf={'flex-start'} padding="8px 8px 16px 8px">
               <Attachments />
             </Box>
           ) : null}
@@ -175,8 +170,19 @@ const Input = memo(
                 pl: 0,
                 width: '100%'
               },
+              startAdornment: (
+                <Stack direction="row" alignItems="center">
+                  <UploadButton
+                    disabled={disabled}
+                    fileSpec={fileSpec}
+                    onFileUploadError={onFileUploadError}
+                    onFileUpload={onFileUpload}
+                  />
+                  <MicButton disabled={disabled} />
+                </Stack>
+              ),
               endAdornment: (
-                <Box sx={{ mr: -2 }}>
+                <Box>
                   <SubmitButton
                     onSubmit={submit}
                     disabled={disabled || (!loading && !value)}
@@ -185,36 +191,6 @@ const Input = memo(
               )
             }}
           />
-          <Stack
-            direction="row"
-            alignItems="center"
-            color="text.secondary"
-            justifyContent="space-between"
-          >
-            <Stack direction="row" alignItems="center" marginLeft={-1}>
-              <UploadButton
-                disabled={disabled}
-                fileSpec={fileSpec}
-                onFileUploadError={onFileUploadError}
-                onFileUpload={onFileUpload}
-              />
-              {chatSettingsInputs.length > 0 && (
-                <IconButton
-                  id="chat-settings-open-modal"
-                  disabled={disabled}
-                  color="inherit"
-                  onClick={() => setChatSettingsOpen(true)}
-                  size="small"
-                >
-                  <TuneIcon fontSize="small" />
-                </IconButton>
-              )}
-              <MicButton disabled={disabled} />
-            </Stack>
-            <Box>
-              <WaterMark />
-            </Box>
-          </Stack>
         </Stack>
       </>
     );

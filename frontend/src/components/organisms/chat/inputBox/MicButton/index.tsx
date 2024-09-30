@@ -3,13 +3,13 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { toast } from 'sonner';
 
-import { IconButton, Theme, Tooltip, useMediaQuery } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 
 import { askUserState, useAudio, useConfig } from '@chainlit/react-client';
 
 import { Translator } from 'components/i18n';
 
-import MicrophoneIcon from 'assets/microphone';
+import { MicrophoneIcon } from 'assets/MicrophoneIcon';
 
 import { attachmentsState } from 'state/chat';
 
@@ -55,10 +55,6 @@ const MicButton = ({ disabled }: Props) => {
 
   useHotkeys('p', startRecording);
 
-  const size = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'))
-    ? 'small'
-    : 'medium';
-
   if (!config?.features.audio.enabled) return null;
 
   return (
@@ -76,10 +72,18 @@ const MicButton = ({ disabled }: Props) => {
           <IconButton
             disabled={disabled || isRecording}
             color="inherit"
-            size={size}
+            sx={{
+              width: 36,
+              height: 36,
+              ':hover': {
+                'svg > path': {
+                  stroke: 'white'
+                }
+              }
+            }}
             onClick={startRecording}
           >
-            <MicrophoneIcon fontSize={size} />
+            <MicrophoneIcon />
           </IconButton>
         </span>
       </Tooltip>

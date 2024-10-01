@@ -44,13 +44,15 @@ const InlinedElements = ({ elements }: Props) => {
   return (
     <Stack sx={{
       display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      gap: '10px',
       pb: '16px',
       maxWidth: '100%',
-      div: {
-        margin: '0',
+      "& > div": {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: '10px',
+        div: {
+          margin: '0 !important'
+        }
       }
     }}
     >

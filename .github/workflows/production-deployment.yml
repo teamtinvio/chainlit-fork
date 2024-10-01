@@ -1,0 +1,51 @@
+name: Production Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  deploy-production:
+    name: Production Deployment
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          clean: true
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '19'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Preparing branch
+        run: echo running on branch ${GITHUB_SHA}
+
+      - name: Build
+        run: pnpm run buildUi
+
+      - name: Deploy to staging
+        uses: reggionick/s3-deploy@v4
+        with:
+          folder: libs/copilot/dist
+          bucket: tinvio-copilot-production
+          bucket-region: ap-southeast-1
+          dist-id: E8NAF9NNK246N  
+          invalidation: /
+          delete-removed: true
+          no-cache: true
+          private: true

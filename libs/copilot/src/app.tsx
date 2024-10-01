@@ -1,8 +1,8 @@
 import { WidgetContext } from 'context';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Toaster } from 'sonner';
-import { IWidgetConfig } from 'types';
+import { CopilotHandle, IWidgetConfig } from 'types';
 import Widget from 'widget';
 
 import { Theme, ThemeProvider } from '@mui/material/styles';
@@ -15,6 +15,9 @@ import { ChainlitContext, useAuth, useConfig } from '@chainlit/react-client';
 
 interface Props {
   widgetConfig: IWidgetConfig;
+  anchor?: HTMLElement | null;
+  onOpen?: () => void;
+  onClose?: () => void;
 }
 
 declare global {
@@ -23,7 +26,12 @@ declare global {
   }
 }
 
-export default function App({ widgetConfig }: Props) {
+const App = React.forwardRef(({
+  widgetConfig,
+  anchor,
+  onOpen,
+  onClose
+}: Props, ref: React.Ref<CopilotHandle>) => {
   const apiClient = useContext(ChainlitContext);
   const { accessToken } = useContext(WidgetContext);
   const { config } = useConfig(accessToken);
@@ -113,7 +121,15 @@ export default function App({ widgetConfig }: Props) {
           }
         }}
       />
-      <Widget config={widgetConfig} />
+      <Widget
+        ref={ref}
+        config={widgetConfig}
+        anchor={anchor}
+        onOpen={onOpen}
+        onClose={onClose}
+      />
     </ThemeProvider>
   );
-}
+});
+
+export default App;

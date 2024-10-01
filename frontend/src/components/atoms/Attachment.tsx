@@ -18,31 +18,24 @@ const Attachment = ({ name, mime, children }: Props) => {
   return (
     <Box
       position="relative"
-      sx={(theme) => ({
-        height: 50,
-        [theme.breakpoints.down('sm')]: {
-          height: 36
-        }
-      })}
     >
       {children}
       <Stack
         sx={(theme) => ({
           height: '100%',
+          maxHeight: '38px',
           flexDirection: 'row',
           alignItems: 'center',
-          gap: 1.2,
-          borderRadius: '0.7rem',
-          px: 1.2,
-          border: (theme) => `1px solid ${theme.palette.primary.main}`,
+          gap: '11px',
+          borderRadius: '6px',
+          px: '11px',
+          py: '7px',
+          border: '1px solid #5470A6',
           color: (theme) =>
             theme.palette.mode === 'light'
               ? theme.palette.primary.main
               : theme.palette.text.primary,
-          background: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.primary.light
-              : theme.palette.primary.dark,
+          background: '#344663',
           width: 160,
           [theme.breakpoints.down('sm')]: {
             width: 'fit-content',
@@ -51,24 +44,29 @@ const Attachment = ({ name, mime, children }: Props) => {
         })}
       >
         <Box
-          sx={(theme) => ({
-            width: '2rem',
-            [theme.breakpoints.down('sm')]: {
-              width: '1.25rem'
-            }
-          })}
+          width='20px'
+          height='24px'
         >
-          <FileIcon {...defaultStyles[extension]} extension={extension} />
+          <FileIcon
+            {...defaultStyles[extension]}
+            extension={extension}
+          />
         </Box>
         <Typography
-          sx={{
+          sx={(theme) => ({
             textOverflow: 'ellipsis',
             overflow: 'hidden',
             whiteSpace: 'nowrap',
-            fontWeight: 500,
-            fontSize: '0.8rem',
-            width: '70%'
-          }}
+            fontFamily: 'Inter,sans-serif',
+            fontWeight: 400,
+            fontSize: '14px',
+            lineHeight: 1.5,
+            mt: '1px',
+            width: 127,
+            [theme.breakpoints.down('sm')]: {
+              width: 87
+            }
+          })}
         >
           {name}
         </Typography>

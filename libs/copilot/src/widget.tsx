@@ -1,64 +1,95 @@
 import PopOver from 'popover';
-import { useState } from 'react';
-import { IWidgetConfig } from 'types';
+import React, { useState } from 'react';
+import { CopilotHandle, IWidgetConfig } from 'types';
 
 import Box from '@mui/material/Box';
 
 import { CommandLineWithBorderIcon } from 'assets/CommandLineWithBorderIcon';
 
 interface Props {
-  anchor?: HTMLElement;
-  isOpen?: boolean;
   config: IWidgetConfig;
+  /**
+   * If undefined, the default anchor will be used.
+   */
+  anchor?: HTMLElement | null;
+  onOpen?: () => void;
   onClose?: () => void;
 }
 
-export default function Widget({ anchor, isOpen, config, onClose }: Props) {
+const Widget = React.forwardRef(({
+  config,
+  anchor,
+  onOpen,
+  onClose
+}: Props, ref: React.Ref<CopilotHandle>) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(anchor || null);
+
   const customStyle = config.button?.style || {};
   const buttonHeight = customStyle.height || customStyle.size || '44px';
 
-  const isPopoverOpen = anchor ? isOpen : Boolean(anchorEl);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const hanldeOnClose = () => {
-    if (!anchor) {
-      setAnchorEl(null);
-    }
+  React.useImperativeHandle(ref, () => ({
+    setIsOpen: (value: ((prev: boolean) => boolean) | boolean) => {
+      if (typeof value === 'boolean') {
+        value ? handleOpen() : handleClose();
+        return;
+      }
 
-    if (onClose) {
-      onClose();
-    }
+      const newIsOpen = value(isOpen);
+
+      newIsOpen ? handleOpen() : handleClose();
+    },
+  }));
+
+  const handleOpen = () => {
+    setIsOpen(true);
+    onOpen?.();
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    onClose?.();
   };
 
   return (
     <>
       <PopOver
         anchorEl={anchorEl}
+        isOpen={isOpen}
         buttonHeight={buttonHeight}
         config={config}
-        onClose={hanldeOnClose}
+        onClose={handleClose}
       />
-      {anchor || (
+      {!anchor && (
         <Box
+          ref={(node: HTMLElement | null) => setAnchorEl(node)}
           aria-label="open copilot"
           id="chainlit-copilot-button"
           sx={{
             minHeight: 'auto',
-            position: 'fixed',
-            bottom: 24,
-            left: 24,
-            zIndex: 1000,
+            position: customStyle?.position || 'fixed',
+            bottom: customStyle?.bottom || '24px',
+            left: customStyle?.left || '24px',
+            top: customStyle?.top || 'auto',
+            right: customStyle?.right || 'auto',
+            zIndex: 900,
             cursor: 'pointer'
           }}
-          onClick={(event: React.MouseEvent<HTMLElement>) =>
-            setAnchorEl(anchorEl ? null : event.currentTarget)
+          onClick={() =>
+            isOpen ? handleClose() : handleOpen()
           }
         >
-          <CommandLineWithBorderIcon
-            color={isPopoverOpen ? '#4D83E8' : '#4D617A'}
-          />
+          {anchor === undefined && (
+            <CommandLineWithBorderIcon
+              color={isOpen ? '#4D83E8' : '#4D617A'}
+            />
+          )}
         </Box>
       )}
+      {anchor}
     </>
   );
-}
+});
+
+export default Widget;

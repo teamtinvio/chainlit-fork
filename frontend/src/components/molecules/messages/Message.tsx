@@ -114,7 +114,12 @@ const Message = memo(
             >
               {/* User message is displayed differently */}
               {isUserMessage ? (
-                <Box display="flex" flexDirection="column" flexGrow={1}>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  flexGrow={1}
+                  width="100%"
+                >
                   <UserMessage message={message}>
                     <MessageContent
                       elements={elements}

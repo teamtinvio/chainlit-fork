@@ -13,7 +13,7 @@ import sonnerCss from './sonner.css?inline';
 import hljsStyles from 'highlight.js/styles/monokai-sublime.css?inline';
 
 import AppWrapper from './src/appWrapper';
-import { IWidgetConfig } from './src/types';
+import { CopilotHandle, IWidgetConfig } from './src/types';
 
 const id = 'chainlit-copilot';
 let root: ReactDOM.Root | null = null;
@@ -21,16 +21,36 @@ let root: ReactDOM.Root | null = null;
 declare global {
   interface Window {
     cl_shadowRootElement: HTMLDivElement;
-    mountChainlitWidget: (config: IWidgetConfig) => void;
+    mountChainlitWidget: (
+      config: IWidgetConfig,
+      /**
+       * If undefined, the default anchor will be used.
+       */
+      anchor?: HTMLElement | null,
+      rootContainerId?: string,
+      copilotHandle?: React.RefObject<CopilotHandle>,
+      onOpen?: () => void,
+      onClose?: () => void
+    ) => void;
     unmountChainlitWidget: () => void;
     sendChainlitMessage: (message: IStep) => void;
   }
 }
 
-window.mountChainlitWidget = (config: IWidgetConfig) => {
+window.mountChainlitWidget = (
+  config: IWidgetConfig,
+  anchor?: HTMLElement | null,
+  rootContainerId?: string,
+  copilotHandle?: React.RefObject<CopilotHandle>,
+  onOpen?: () => void,
+  onClose?: () => void
+) => {
   const container = document.createElement('div');
   container.id = id;
-  document.body.appendChild(container);
+
+  const rootContainer = document.getElementById(rootContainerId || '') || document.body;
+
+  rootContainer.appendChild(container);
 
   const shadowContainer = container.attachShadow({ mode: 'open' });
   const shadowRootElement = document.createElement('div');
@@ -54,7 +74,13 @@ window.mountChainlitWidget = (config: IWidgetConfig) => {
           {hljsStyles}
           {sonnerCss}
         </style>
-        <AppWrapper widgetConfig={config} />
+        <AppWrapper
+          ref={copilotHandle}
+          widgetConfig={config}
+          anchor={anchor}
+          onOpen={onOpen}
+          onClose={onClose}
+        />
       </CacheProvider>
     </React.StrictMode>
   );

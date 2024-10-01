@@ -42,7 +42,18 @@ const InlinedElements = ({ elements }: Props) => {
   );
 
   return (
-    <Stack gap={1} mb={2}>
+    <Stack sx={{
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: '10px',
+      pb: '16px',
+      maxWidth: '100%',
+      div: {
+        margin: '0',
+      }
+    }}
+    >
       {elementsByType.image?.length ? (
         <InlinedImageList items={elementsByType.image} />
       ) : null}

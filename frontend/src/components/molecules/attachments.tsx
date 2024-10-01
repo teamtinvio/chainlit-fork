@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { Attachment } from 'components/atoms/Attachment';
 import CircularProgressIconButton from 'components/atoms/buttons/progressIconButton';
-import { Translator } from 'components/i18n';
+// import { Translator } from 'components/i18n';
 
 import { attachmentsState } from 'state/chat';
 
@@ -87,10 +87,10 @@ const Attachments = (): JSX.Element => {
                   right: -10,
                   top: -10,
                   background: 'white',
-                  backgroundColor: 'background.paper',
-                  border: (theme) => `1px solid ${theme.palette.divider}`,
+                  backgroundColor: '#1F2A37',
+                  border: '1px solid #283441',
                   '&:hover': {
-                    backgroundColor: 'background.default'
+                    backgroundColor: '#1F2A37'
                   }
                 }}
                 onClick={attachment.remove}

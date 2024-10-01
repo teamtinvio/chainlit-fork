@@ -8,6 +8,11 @@ export interface IWidgetConfig {
     containerId?: string;
     imageUrl?: string;
     style?: {
+      position?: string;
+      left?: string;
+      right?: string;
+      top?: string;
+      bottom?: string;
       size?: string;
       width?: string;
       height?: string;
@@ -24,6 +29,13 @@ export interface IWidgetConfig {
   chatPopover?: {
     style?: {
       inset?: string;
+      width?: string;
+      expandedWidth?: string;
+      height?: string;
     };
   };
+}
+
+export interface CopilotHandle {
+  setIsOpen: (value: ((prev: boolean) => boolean) | boolean) => void;
 }

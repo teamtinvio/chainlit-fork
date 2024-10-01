@@ -22,19 +22,21 @@ jobs:
           clean: true
           fetch-depth: 0
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '19'
-
       - uses: pnpm/action-setup@v4
         with:
+          run_install: false
           version: 9
 
-      - name: Preparing branch
-        run: echo running on branch ${GITHUB_SHA}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '19'
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm i
+
+      - name: Preparing branch
+        run: echo running on branch ${GITHUB_SHA}
 
       - name: Build
         run: pnpm run buildUi

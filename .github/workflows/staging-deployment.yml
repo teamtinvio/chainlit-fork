@@ -34,7 +34,7 @@ jobs:
         run: echo running on branch ${GITHUB_SHA}
 
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm i
 
       - name: Build
         run: pnpm run buildUi

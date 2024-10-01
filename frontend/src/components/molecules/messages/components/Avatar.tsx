@@ -3,6 +3,8 @@ import { useContext, useMemo } from 'react';
 import { Tooltip } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 
+import { ClioMessageAvatar } from 'assets/ClioMessageAvatar';
+
 import {
   ChainlitContext,
   useChatSession,
@@ -39,12 +41,13 @@ const MessageAvatar = ({ author, hide }: Props) => {
       >
         <Avatar
           sx={{
-            width: '1.6rem',
-            height: '1.6rem',
+            width: '32px',
+            height: '21px',
             bgcolor: 'transparent'
           }}
-          src={hide ? undefined : avatarUrl}
-        />
+        >
+          {!hide && (<ClioMessageAvatar />)}
+        </Avatar>
       </Tooltip>
     </span>
   );

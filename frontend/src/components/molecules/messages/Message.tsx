@@ -130,7 +130,7 @@ const Message = memo(
               ) : (
                 <Stack
                   direction="row"
-                  gap="1rem"
+                  gap="8px"
                   width="100%"
                   className="ai-message"
                 >

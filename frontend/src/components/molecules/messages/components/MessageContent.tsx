@@ -98,8 +98,9 @@ ${input}`}
     const markdownContent = (
       <Typography
         sx={{
-          minHeight: '20px',
-          fontSize: '1rem',
+          fontSize: '14px',
+          fontWeight: '400',
+          lineHeight: '1.5',
           fontFamily: (theme) => theme.typography.fontFamily,
           overflowX: 'auto'
         }}

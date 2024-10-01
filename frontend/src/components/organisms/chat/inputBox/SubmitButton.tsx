@@ -35,9 +35,10 @@ const SubmitButton = ({ disabled, onSubmit }: SubmitButtonProps) => {
     >
       {loading && firstInteraction ? (
         <Tooltip
-          title={
-            <Translator path="components.organisms.chat.inputBox.SubmitButton.stopTask" />
-          }
+          // title={
+          //   <Translator path="components.organisms.chat.inputBox.SubmitButton.stopTask" />
+          // }
+          title=""
         >
           <IconButton
             id="stop-button"
@@ -52,9 +53,10 @@ const SubmitButton = ({ disabled, onSubmit }: SubmitButtonProps) => {
         </Tooltip>
       ) : (
         <Tooltip
-          title={
-            <Translator path="components.organisms.chat.inputBox.SubmitButton.sendMessage" />
-          }
+          // title={
+          //   <Translator path="components.organisms.chat.inputBox.SubmitButton.sendMessage" />
+          // }
+          title=""
         >
           <IconButton
             sx={{

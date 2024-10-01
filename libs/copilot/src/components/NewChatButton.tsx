@@ -27,7 +27,8 @@ export default function NewChatButton() {
   return (
     <Box>
       <Tooltip
-        title={<Translator path="components.molecules.newChatButton.newChat" />}
+        // title={<Translator path="components.molecules.newChatButton.newChat" />}
+        title=""
       >
         <IconButton
           id="new-chat-button"

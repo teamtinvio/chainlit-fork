@@ -34,7 +34,10 @@ const InputLabel = ({
           {label}
         </MInputLabel>
         {tooltip ? (
-          <Tooltip title={tooltip}>
+          <Tooltip
+            // title={tooltip}
+            title=""
+          >
             <Info sx={{ fontSize: 12, color: 'grey.600' }} />
           </Tooltip>
         ) : null}

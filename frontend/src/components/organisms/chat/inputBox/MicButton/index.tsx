@@ -61,12 +61,13 @@ const MicButton = ({ disabled }: Props) => {
     <>
       <RecordScreen open={isRecording} isSpeaking={isSpeaking} />
       <Tooltip
-        title={
-          <Translator
-            path="components.organisms.chat.inputBox.speechButton.start"
-            suffix=" (P)"
-          />
-        }
+        // title={
+        //   <Translator
+        //     path="components.organisms.chat.inputBox.speechButton.start"
+        //     suffix=" (P)"
+        //   />
+        // }
+        title=""
       >
         <span>
           <IconButton

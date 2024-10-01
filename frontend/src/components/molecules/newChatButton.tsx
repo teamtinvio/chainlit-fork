@@ -33,7 +33,8 @@ export default function NewChatButton(props: IconButtonProps) {
   return (
     <Box>
       <Tooltip
-        title={<Translator path="components.molecules.newChatButton.newChat" />}
+        // title={<Translator path="components.molecules.newChatButton.newChat" />}
+        title=""
       >
         <IconButton id="new-chat-button" onClick={handleClickOpen} {...props}>
           <SquarePenIcon sx={{ height: 20, width: 20 }} />

@@ -32,9 +32,10 @@ const Attachments = (): JSX.Element => {
 
         const progress = showProgress ? (
           <Tooltip
-            title={
-              <Translator path="components.molecules.attachments.cancelUpload" />
-            }
+            // title={
+            //   <Translator path="components.molecules.attachments.cancelUpload" />
+            // }
+            title=""
           >
             <Box
               sx={{
@@ -74,9 +75,10 @@ const Attachments = (): JSX.Element => {
         const remove =
           !showProgress && attachment.remove ? (
             <Tooltip
-              title={
-                <Translator path="components.molecules.attachments.removeAttachment" />
-              }
+              // title={
+              //   <Translator path="components.molecules.attachments.removeAttachment" />
+              // }
+              title=""
             >
               <IconButton
                 sx={{

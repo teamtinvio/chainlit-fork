@@ -26,7 +26,11 @@ const ActionButton = ({ action, margin, onClick }: ActionProps) => {
   };
 
   return (
-    <Tooltip title={action.description} placement="top">
+    <Tooltip
+      // title={action.description}
+      title=""
+      placement="top"
+    >
       <span>
         <Button
           size="small"

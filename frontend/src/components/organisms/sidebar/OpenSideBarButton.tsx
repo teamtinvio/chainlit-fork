@@ -20,15 +20,16 @@ const OpenSideBarButton = ({ onClick, open }: Props): JSX.Element => {
 
   return (
     <Tooltip
-      title={
-        open
-          ? t(
-              'components.organisms.threadHistory.sidebar.TriggerButton.closeSidebar'
-            )
-          : t(
-              'components.organisms.threadHistory.sidebar.TriggerButton.openSidebar'
-            )
-      }
+      // title={
+      //   open
+      //     ? t(
+      //         'components.organisms.threadHistory.sidebar.TriggerButton.closeSidebar'
+      //       )
+      //     : t(
+      //         'components.organisms.threadHistory.sidebar.TriggerButton.openSidebar'
+      //       )
+      // }
+      title=""
       placement="right"
     >
       <Box

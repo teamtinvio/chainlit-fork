@@ -102,7 +102,10 @@ const FeedbackButtons = ({ message }: Props) => {
 
     const baseButtons = [
       () => (
-        <Tooltip title="Helpful">
+        <Tooltip
+          // title="Helpful"
+          title=""
+        >
           <span>
             <IconButton
               color="inherit"
@@ -118,7 +121,10 @@ const FeedbackButtons = ({ message }: Props) => {
         </Tooltip>
       ),
       () => (
-        <Tooltip title="Not helpful">
+        <Tooltip
+          // title="Not helpful"
+          title=""
+        >
           <span>
             <IconButton
               color="inherit"
@@ -137,7 +143,10 @@ const FeedbackButtons = ({ message }: Props) => {
 
     if (comment) {
       baseButtons.push(() => (
-        <Tooltip title="Feedback">
+        <Tooltip
+          // title="Feedback"
+          title=""
+        >
           <span>
             <IconButton
               color="inherit"

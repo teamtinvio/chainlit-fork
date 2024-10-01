@@ -17,7 +17,10 @@ const ActionDrawerButton = ({ actions }: { actions: IAction[] }) => {
 
   return (
     <>
-      <Tooltip title="More Actions">
+      <Tooltip
+        // title="More Actions"
+        title=""
+      >
         <IconButton
           id="actions-drawer-button"
           onClick={(event: React.MouseEvent<HTMLElement>) =>

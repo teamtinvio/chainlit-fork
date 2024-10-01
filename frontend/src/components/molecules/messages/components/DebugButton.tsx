@@ -19,7 +19,10 @@ const DebugButton = ({ step, debugUrl }: Props) => {
     .replace('[thread_id]', step.threadId!)
     .replace('[step_id]', stepId);
   return (
-    <Tooltip title="Debug in Literal AI">
+    <Tooltip
+      // title="Debug in Literal AI"
+      title=""
+    >
       <IconButton
         color="inherit"
         className="debug-button"

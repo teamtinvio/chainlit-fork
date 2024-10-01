@@ -35,9 +35,10 @@ const UploadButton = ({
 
   return (
     <Tooltip
-      title={
-        <Translator path="components.organisms.chat.inputBox.UploadButton.attachFiles" />
-      }
+      // title={
+      //   <Translator path="components.organisms.chat.inputBox.UploadButton.attachFiles" />
+      // }
+      title=""
     >
       <span>
         <input id="upload-button-input" {...getInputProps()} />

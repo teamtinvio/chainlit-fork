@@ -30,7 +30,8 @@ const ClipboardCopy = ({ value, edge }: ClipboardCopyProps): JSX.Element => {
 
   return (
     <Tooltip
-      title={isCopied ? 'Copied to clipboard!' : 'Copy'}
+      // title={isCopied ? 'Copied to clipboard!' : 'Copy'}
+      title=''
       onClose={handleTooltipClose}
       sx={{ zIndex: 2 }}
     >

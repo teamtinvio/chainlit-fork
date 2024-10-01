@@ -58,7 +58,10 @@ const Collapse = ({
         {content}
       </MCollapse>
       <Stack direction="row" justifyContent="end">
-        <Tooltip title={expandAll ? 'Collapse' : 'Expand'}>
+        <Tooltip
+          // title={expandAll ? 'Collapse' : 'Expand'}
+          title=""
+        >
           <IconButton onClick={toggleExpandAll}>
             {expandAll ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </IconButton>

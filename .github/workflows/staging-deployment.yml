@@ -1,0 +1,48 @@
+name: Staging Deployment
+
+on:
+  push:
+    branches:
+      - next
+  workflow_dispatch:
+    inputs:
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_NON_PROD }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_NON_PROD }}
+
+jobs:
+  deploy-staging:
+    name: Staging Deployment
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          clean: true
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Preparing branch
+        run: echo running on branch ${GITHUB_SHA}
+
+      - name: Install dependencies
+        run: pnpm ci
+
+      - name: Build
+        run: pnpm run buildUi
+
+      - name: Deploy to staging
+        uses: reggionick/s3-deploy@v3
+        with:
+          folder: libs/copilot/dist
+          bucket: tinvio-copilot-staging
+          bucket-region: ap-southeast-1
+          dist-id: ECVMYVEHMSE6B 
+          invalidation: /
+          delete-removed: true
+          no-cache: true
+          private: true

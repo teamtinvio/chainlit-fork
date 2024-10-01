@@ -1,0 +1,58 @@
+name: Production Deployment
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+jobs:
+  deploy-production:
+    name: Production Deployment
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          clean: true
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Preparing branch
+        run: echo running on branch ${GITHUB_SHA}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to staging
+        uses: reggionick/s3-deploy@v3
+        with:
+          folder: build
+          bucket: tinvio-odin-fe-common-production
+          bucket-region: ap-southeast-1
+          dist-id: E2YOYI4PCOANYH
+          invalidation: /
+          delete-removed: true
+          no-cache: true
+          private: true
+
+      # - name: Trigger odin-valhalla-app workflow
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.JUAN_WORKFLOW_TOKEN }}
+      #   run: gh workflow run production-deployment.yml -r next -R "teamtinvio/odin-valhalla-app"
+
+      # - name: Trigger odin-dashboard workflow
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.JUAN_WORKFLOW_TOKEN }}
+      #   run: gh workflow run production-deployment.yml -r next -R "teamtinvio/odin-dashboard"

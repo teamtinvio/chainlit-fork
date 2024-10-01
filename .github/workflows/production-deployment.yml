@@ -1,9 +1,6 @@
 name: Production Deployment
 
 on:
-  push:
-    branches:
-      - master
   workflow_dispatch:
     inputs:
 
@@ -14,7 +11,7 @@ env:
 jobs:
   deploy-production:
     name: Production Deployment
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@v2
@@ -22,37 +19,33 @@ jobs:
           clean: true
           fetch-depth: 0
 
-      - uses: actions/setup-node@v2
+      - uses: pnpm/action-setup@v4
         with:
-          node-version: '16'
+          run_install: false
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '19'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm i
 
       - name: Preparing branch
         run: echo running on branch ${GITHUB_SHA}
 
-      - name: Install dependencies
-        run: npm ci
-
       - name: Build
-        run: npm run build
+        run: pnpm run buildUi
 
       - name: Deploy to staging
-        uses: reggionick/s3-deploy@v3
+        uses: reggionick/s3-deploy@v4
         with:
-          folder: build
-          bucket: tinvio-odin-fe-common-production
+          folder: libs/copilot/dist
+          bucket: tinvio-copilot-production
           bucket-region: ap-southeast-1
-          dist-id: E2YOYI4PCOANYH
+          dist-id: E8NAF9NNK246N  
           invalidation: /
           delete-removed: true
           no-cache: true
           private: true
-
-      # - name: Trigger odin-valhalla-app workflow
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.JUAN_WORKFLOW_TOKEN }}
-      #   run: gh workflow run production-deployment.yml -r next -R "teamtinvio/odin-valhalla-app"
-
-      # - name: Trigger odin-dashboard workflow
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.JUAN_WORKFLOW_TOKEN }}
-      #   run: gh workflow run production-deployment.yml -r next -R "teamtinvio/odin-dashboard"

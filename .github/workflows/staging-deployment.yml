@@ -1,9 +1,6 @@
 name: Staging Deployment
 
 on:
-  push:
-    branches:
-      - next
   workflow_dispatch:
     inputs:
 
@@ -42,7 +39,7 @@ jobs:
         run: pnpm run buildUi
 
       - name: Deploy to staging
-        uses: reggionick/s3-deploy@v3
+        uses: reggionick/s3-deploy@v4
         with:
           folder: libs/copilot/dist
           bucket: tinvio-copilot-staging
